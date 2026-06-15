@@ -80,3 +80,15 @@ SpireMod/
 - 应用 `java` 插件
 - `desktop-1.0.jar` 作为 compileOnly 依赖
 - Jar 任务输出到 ModTheSpire 的 `mods/` 目录
+
+## 本机 Mod 加载路径
+
+在当前 Mac + Steam 安装环境下，`ModTheSpire` 读取的是相对路径 `mods/`。实际对应到：
+
+`/Users/stephenzhuang/Library/Application Support/Steam/steamapps/common/SlayTheSpire/SlayTheSpire.app/Contents/Resources/mods/`
+
+不要放到外层目录：
+
+`/Users/stephenzhuang/Library/Application Support/Steam/steamapps/common/SlayTheSpire/mods/`
+
+本项目的 `scripts/build-mod.sh` 和 `build.gradle` 默认都应输出到 `SlayTheSpire.app/Contents/Resources/mods/`，避免 ModTheSpire 启动时找不到本地 Mod。

@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+}
+
+group = 'spiremod'
+version = '0.1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+def defaultStsJar = file("${System.properties['user.home']}/Library/Application Support/Steam/steamapps/common/SlayTheSpire/SlayTheSpire.app/Contents/Resources/desktop-1.0.jar")
+def defaultMtsJar = file("${System.properties['user.home']}/Library/Application Support/Steam/steamapps/workshop/content/646570/1605060445/ModTheSpire.jar")
+def defaultModsDir = file("${System.properties['user.home']}/Library/Application Support/Steam/steamapps/common/SlayTheSpire/SlayTheSpire.app/Contents/Resources/mods")
+
+def stsJarPath = providers.gradleProperty('stsJar').orElse(defaultStsJar.absolutePath).get()
+def mtsJarPath = providers.gradleProperty('mtsJar').orElse(defaultMtsJar.absolutePath).get()
+def modsDirPath = providers.gradleProperty('modsDir').orElse(defaultModsDir.absolutePath).get()
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly files(stsJarPath)
+    compileOnly files(mtsJarPath)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.jar {
+    archiveBaseName = 'SpireMod'
+    destinationDirectory = file(modsDirPath)
+
+    from(sourceSets.main.output)
+    from('src/main/resources') {
+        include 'ModTheSpire.json'
+    }
+
+    doFirst {
+        def stsJar = file(stsJarPath)
+        def mtsJar = file(mtsJarPath)
+        if (!stsJar.exists()) {
+            throw new GradleException("Slay the Spire jar not found: ${stsJar}")
+        }
+        if (!mtsJar.exists()) {
+            throw new GradleException("ModTheSpire jar not found: ${mtsJar}")
+        }
+        file(modsDirPath).mkdirs()
+    }
+}

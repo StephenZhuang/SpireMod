@@ -1,82 +1,82 @@
-# SpireMod — Lightweight Slay the Spire Mod Design Spec
+# SpireMod — 轻量级杀戮尖塔 Mod 设计文档
 
-**Date**: 2026-06-15  
-**Status**: Draft  
-**Approach**: SpirePatch only (no BaseMod)
+**日期**：2026-06-15  
+**状态**：草案  
+**方案**：纯 SpirePatch（不依赖 BaseMod）
 
-## Overview
+## 概述
 
-A minimal Slay the Spire content mod. On game start (new run), the player receives:
+一个极简的杀戮尖塔内容 Mod。新开一局时，玩家自动获得：
 
-- +200 gold
-- Membership Card (原版 Boss Relic)
-- The Courier (原版 Shop Relic)
-- Black Star (原版 Boss Relic)
+- 金币 +200
+- 会员卡（原版 Boss 遗物，商店永久半价）
+- 送货员（原版商店遗物，商店自动补货）
+- 黑星（原版 Boss 遗物，精英怪掉 2 个遗物）
 
-All three relics are vanilla — no custom effects or new assets.
+以上四个效果均使用原版物品，无自定义内容。
 
-## Project Structure
+## 项目结构
 
 ```
 SpireMod/
 ├── src/main/java/spiremod/
-│   ├── SpireMod.java              # @ModAnnotation entry point
+│   ├── SpireMod.java              # @SpireInitializer 入口
 │   └── patches/
-│       ├── GoldPatch.java         # Adds +200 gold at game start
-│       └── RelicPatch.java        # Grants 3 relics at game start
+│       ├── GoldPatch.java         # 开局金币 +200
+│       └── RelicPatch.java        # 开局发放 3 个遗物
 ├── src/main/resources/
-│   └── ModTheSpire.json           # MTS metadata manifest
-└── build.gradle                   # Gradle build (ModTheSpire only)
+│   └── ModTheSpire.json           # MTS 元信息清单
+└── build.gradle                   # Gradle 构建脚本
 ```
 
-## Dependencies
+## 依赖
 
-- **ModTheSpire** (required) — patching framework
-- **desktop-1.0.jar** (compile-only) — Slay the Spire game classes
-- No BaseMod dependency
+- **ModTheSpire**（必需）— 运行时 patch 框架
+- **desktop-1.0.jar**（仅编译期）— 杀戮尖塔游戏类
+- 不依赖 BaseMod
 
-## Component Design
+## 各组件说明
 
-### SpireMod.java — Entry Point
+### SpireMod.java — 入口
 
-Standard `@SpireInitializer` class. Calls `BaseModInit` and registers the mod with ModTheSpire. No subscriptions or BaseMod hooks.
+标准 `@SpireInitializer` 类，负责向 ModTheSpire 注册 Mod。
 
 ### GoldPatch.java
 
-- **Hook target**: Character initialization phase (exact class/method TBD from decompiled source)
-- **Behavior**: Increments the player's gold counter by 200
-- **Guard**: Only applies at game start (not on reload / continue)
+- **Hook 目标**：角色初始化阶段（具体类名和方法签名在实现阶段通过反编译源码确认）
+- **行为**：在玩家金币计数器上 +200
+- **防护**：仅在新开一局时触发，读档时不触发
 
 ### RelicPatch.java
 
-- **Hook target**: Relic distribution phase (exact class/method TBD from decompiled source)
-- **Behavior**: Appends three relic instances to the player's relic list:
-  - `Membership Card`
-  - `The Courier`
-  - `Black Star`
-- **Guard**: Only applies at game start; does not fire on boss relic selection screens
+- **Hook 目标**：遗物发放阶段（具体类名和方法签名在实现阶段通过反编译源码确认）
+- **行为**：向玩家遗物列表追加三个原版遗物实例：
+  - `Membership Card`（会员卡）
+  - `The Courier`（送货员）
+  - `Black Star`（黑星）
+- **防护**：仅在新开一局时触发，不在 Boss 遗物选择界面触发
 
 ### ModTheSpire.json
 
-Standard MTS manifest with mod ID, name, author, description, and dependency list (empty or MTS only).
+标准 MTS 清单文件，包含 mod ID、名称、作者、描述和依赖列表。
 
-## Hook Point Candidates
+## Hook 点候选
 
-Exact class names and method signatures will be determined during implementation by referencing decompiled Slay the Spire source. Likely candidates:
+实现时需参考杀戮尖塔反编译源码确定精确的类名和方法签名。候选 hook 点：
 
-- **Gold**: `AbstractPlayer.gainGold(int)` or `AbstractPlayer.initializeGold()` or character constructor
-- **Relics**: `AbstractDungeon.initializeRelics()` or `AbstractPlayer.obtainPotion` area
+- **金币**：`AbstractPlayer.gainGold(int)` 或 `AbstractPlayer.initializeGold()` 或角色构造函数
+- **遗物**：`AbstractDungeon.initializeRelics()` 附近
 
-## Testing
+## 测试
 
-- Launch game with ModTheSpire, start a new run
-- Verify: gold starts at 299 (Ironclad base 99 + 200) or equivalent
-- Verify: all 3 relics are present in the relic bar
-- Verify: relics do NOT appear when loading a saved game
+- 通过 ModTheSpire 启动游戏，新开一局
+- 验证：金币在基础值上多了 200（如铁甲战士基础 99 → 299）
+- 验证：遗物栏中包含会员卡、送货员、黑星
+- 验证：读档时不会重复获得
 
 ## build.gradle
 
-Standard ModTheSpire mod template:
-- Apply `java` plugin
-- `desktop-1.0.jar` as compileOnly dependency
-- Jar task that packs classes into the ModTheSpire `mods/` directory
+标准 ModTheSpire Mod 模板：
+- 应用 `java` 插件
+- `desktop-1.0.jar` 作为 compileOnly 依赖
+- Jar 任务输出到 ModTheSpire 的 `mods/` 目录

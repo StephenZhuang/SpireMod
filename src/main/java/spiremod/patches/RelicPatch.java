@@ -6,10 +6,10 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.RelicLibrary;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.BlackStar;
-import com.megacrit.cardcrawl.relics.Courier;
 import com.megacrit.cardcrawl.relics.FrozenEgg2;
 import com.megacrit.cardcrawl.relics.MembershipCard;
 import com.megacrit.cardcrawl.relics.MoltenEgg2;
+import com.megacrit.cardcrawl.relics.Omamori;
 import com.megacrit.cardcrawl.relics.ToxicEgg2;
 
 @SpirePatch(
@@ -19,7 +19,7 @@ import com.megacrit.cardcrawl.relics.ToxicEgg2;
 public class RelicPatch {
     public static void Postfix(AbstractPlayer __instance) {
         obtainIfMissing(__instance, MembershipCard.ID);
-        obtainIfMissing(__instance, Courier.ID);
+        obtainIfMissing(__instance, Omamori.ID);
         obtainIfMissing(__instance, BlackStar.ID);
         obtainIfMissing(__instance, MoltenEgg2.ID);
         obtainIfMissing(__instance, ToxicEgg2.ID);

@@ -4,6 +4,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.EnergyManager;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
+import spiremod.state.LoanState;
 
 @SpirePatch(
     clz = AbstractPlayer.class,
@@ -25,6 +26,7 @@ public class GoldPatch {
         float hbH,
         EnergyManager energy
     ) {
+        LoanState.reset();
         __instance.gainGold(BONUS_GOLD);
         __instance.displayGold = __instance.gold;
     }

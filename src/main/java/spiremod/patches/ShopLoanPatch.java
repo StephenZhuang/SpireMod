@@ -21,11 +21,11 @@ import spiremod.state.LoanState;
 public class ShopLoanPatch {
     private static final float BUTTON_WIDTH = 220.0f * Settings.scale;
     private static final float BUTTON_HEIGHT = 64.0f * Settings.scale;
-    private static final float BUTTON_X = 1560.0f * Settings.xScale;
-    private static final float BORROW_Y = 380.0f * Settings.yScale;
-    private static final float REPAY_Y = 300.0f * Settings.yScale;
-    private static final float STATUS_X = 1410.0f * Settings.xScale;
-    private static final float STATUS_Y = 470.0f * Settings.yScale;
+    private static final float BUTTON_X = 140.0f * Settings.xScale;
+    private static final float BORROW_Y = 940.0f * Settings.yScale;
+    private static final float REPAY_Y = 860.0f * Settings.yScale;
+    private static final float STATUS_X = 260.0f * Settings.xScale;
+    private static final float STATUS_Y = 1000.0f * Settings.yScale;
 
     private static final Color BUTTON_COLOR = new Color(0.15f, 0.18f, 0.12f, 0.92f);
     private static final Color BUTTON_HOVER_COLOR = new Color(0.28f, 0.32f, 0.22f, 0.98f);

@@ -10,6 +10,8 @@ import com.megacrit.cardcrawl.relics.FrozenEgg2;
 import com.megacrit.cardcrawl.relics.MembershipCard;
 import com.megacrit.cardcrawl.relics.MoltenEgg2;
 import com.megacrit.cardcrawl.relics.Omamori;
+import com.megacrit.cardcrawl.relics.CultistMask;
+import com.megacrit.cardcrawl.relics.SsserpentHead;
 import com.megacrit.cardcrawl.relics.ToxicEgg2;
 
 @SpirePatch(
@@ -23,6 +25,8 @@ public class RelicPatch {
         obtainIfMissing(__instance, BlackStar.ID);
         obtainIfMissing(__instance, MoltenEgg2.ID);
         obtainIfMissing(__instance, ToxicEgg2.ID);
+        obtainIfMissing(__instance, CultistMask.ID);
+        obtainIfMissing(__instance, SsserpentHead.ID);
         obtainIfMissing(__instance, FrozenEgg2.ID);
     }
 

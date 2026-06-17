@@ -9,11 +9,16 @@
 一个极简的杀戮尖塔内容 Mod。新开一局时，玩家自动获得：
 
 - 金币 +200
-- 会员卡（原版商店遗物，商店永久半价）
-- 送货员（原版罕见遗物，商店自动补货）
-- 黑星（原版 Boss 遗物，精英怪掉 2 个遗物）
+- 会员卡（Membership Card，原版商店遗物，商店永久半价）
+- 御守（Omamori，原版遗物，抵挡前 2 次负面效果）
+- 黑星（Black Star，原版 Boss 遗物，精英怪掉 2 个遗物）
+- 熔岩蛋（Molten Egg，获得攻击牌时自动升级）
+- 剧毒蛋（Toxic Egg，获得技能牌时自动升级）
+- 教士面容（Cultist Mask，战斗后最大生命 +1）
+- 蛇首遗物（Ssserpent Head，进入 ? 房间 +50 金币）
+- 冰冻蛋（Frozen Egg，获得能力牌时自动升级）
 
-以上四个效果均使用原版物品，无自定义内容。
+以上均使用原版物品，无自定义遗物内容。商店贷款和心脏惩罚等扩展功能详见 `2026-06-16` 和 `2026-06-17` 设计文档。
 
 ## 项目结构
 
@@ -21,9 +26,15 @@
 SpireMod/
 ├── src/main/java/spiremod/
 │   ├── SpireMod.java              # @SpireInitializer 入口
-│   └── patches/
-│       ├── GoldPatch.java         # 开局金币 +200
-│       └── RelicPatch.java        # 开局发放 3 个遗物
+│   ├── patches/
+│   │   ├── GoldPatch.java         # 开局金币 +200，重置贷款状态
+│   │   ├── RelicPatch.java        # 开局发放 8 个遗物
+│   │   ├── ShopLoanPatch.java     # 商店贷款/还款 UI
+│   │   └── HeartLoanPenaltyPatch.java  # 心脏战债务惩罚
+│   ├── powers/
+│   │   └── MerchantWrathPower.java     # 商人的愤怒 Debuff
+│   └── state/
+│       └── LoanState.java         # 贷款全局状态
 ├── src/main/resources/
 │   └── ModTheSpire.json           # MTS 元信息清单
 └── build.gradle                   # Gradle 构建脚本
@@ -49,12 +60,17 @@ SpireMod/
 
 ### RelicPatch.java
 
-- **Hook 目标**：遗物发放阶段（具体类名和方法签名在实现阶段通过反编译源码确认）
-- **行为**：向玩家遗物列表追加三个原版遗物实例：
+- **Hook 目标**：`AbstractPlayer.initializeStarterRelics`
+- **行为**：向玩家遗物列表追加以下原版遗物（已拥有则跳过）：
   - `Membership Card`（会员卡）
-  - `The Courier`（送货员）
+  - `Omamori`（御守）— 替代原 Courier
   - `Black Star`（黑星）
-- **防护**：仅在新开一局时触发，不在 Boss 遗物选择界面触发
+  - `Molten Egg`（熔岩蛋，获得攻击牌时自动升级）
+  - `Toxic Egg`（剧毒蛋，获得技能牌时自动升级）
+  - `Cultist Mask`（教士面容，战斗后最大生命 +1）
+  - `Ssserpent Head`（蛇首遗物，进入 ? 房间 +50 金币）
+  - `Frozen Egg`（冰冻蛋，获得能力牌时自动升级）
+- **防护**：仅在新开一局时触发，通过 `obtainIfMissing` 检查避免重复
 
 ### ModTheSpire.json
 

@@ -15,6 +15,10 @@ public final class LoanState {
         currentDebt = 0;
     }
 
+    public static void setCurrentDebt(int debt) {
+        currentDebt = Math.max(0, Math.min(debt, MAX_DEBT));
+    }
+
     public static int getCurrentDebt() {
         return currentDebt;
     }

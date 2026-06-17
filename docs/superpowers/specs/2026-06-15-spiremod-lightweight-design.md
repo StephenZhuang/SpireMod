@@ -14,7 +14,7 @@
 - 黑星（Black Star，原版 Boss 遗物，精英怪掉 2 个遗物）
 - 熔岩蛋（Molten Egg，获得攻击牌时自动升级）
 - 剧毒蛋（Toxic Egg，获得技能牌时自动升级）
-- 教士面容（Cultist Mask，战斗后最大生命 +1）
+- 教士面容（Face of Cleric，战斗后最大生命 +1）
 - 蛇首遗物（Ssserpent Head，进入 ? 房间 +50 金币）
 - 冰冻蛋（Frozen Egg，获得能力牌时自动升级）
 
@@ -30,6 +30,7 @@ SpireMod/
 │   │   ├── GoldPatch.java         # 开局金币 +200，重置贷款状态
 │   │   ├── RelicPatch.java        # 开局发放 8 个遗物
 │   │   ├── ShopLoanPatch.java     # 商店贷款/还款 UI
+│   │   ├── LoanSavePatch.java     # 贷款状态存档/读档持久化
 │   │   └── HeartLoanPenaltyPatch.java  # 心脏战债务惩罚
 │   ├── powers/
 │   │   └── MerchantWrathPower.java     # 商人的愤怒 Debuff
@@ -55,8 +56,8 @@ SpireMod/
 ### GoldPatch.java
 
 - **Hook 目标**：角色初始化阶段（具体类名和方法签名在实现阶段通过反编译源码确认）
-- **行为**：在玩家金币计数器上 +200
-- **防护**：仅在新开一局时触发，读档时不触发
+- **行为**：在玩家金币计数器上 +200；重置 LoanState 内存状态；删除上局残留的 `loanstate.dat` 文件
+- **防护**：仅在新开一局时触发，读档时不触发；确保上局债务不会污染新局
 
 ### RelicPatch.java
 
@@ -67,7 +68,7 @@ SpireMod/
   - `Black Star`（黑星）
   - `Molten Egg`（熔岩蛋，获得攻击牌时自动升级）
   - `Toxic Egg`（剧毒蛋，获得技能牌时自动升级）
-  - `Cultist Mask`（教士面容，战斗后最大生命 +1）
+  - `Face of Cleric`（教士面容，战斗后最大生命 +1）
   - `Ssserpent Head`（蛇首遗物，进入 ? 房间 +50 金币）
   - `Frozen Egg`（冰冻蛋，获得能力牌时自动升级）
 - **防护**：仅在新开一局时触发，通过 `obtainIfMissing` 检查避免重复

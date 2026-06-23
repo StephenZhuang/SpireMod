@@ -17,6 +17,9 @@
 - 教士面容（Face of Cleric，战斗后最大生命 +1）
 - 蛇首遗物（Ssserpent Head，进入 ? 房间 +50 金币）
 - 冰冻蛋（Frozen Egg，获得能力牌时自动升级）
+- 红宝石钥匙（Ruby Key，解锁 Neow 红色宝箱）
+- 绿宝石钥匙（Emerald Key，解锁 Neow 绿色宝箱）
+- 蓝宝石钥匙（Sapphire Key，解锁 Neow 蓝色宝箱）
 
 以上均使用原版物品，无自定义遗物内容。商店贷款和心脏惩罚等扩展功能详见 `2026-06-16` 和 `2026-06-17` 设计文档。
 
@@ -71,7 +74,8 @@ SpireMod/
   - `Face of Cleric`（教士面容，战斗后最大生命 +1）
   - `Ssserpent Head`（蛇首遗物，进入 ? 房间 +50 金币）
   - `Frozen Egg`（冰冻蛋，获得能力牌时自动升级）
-- **防护**：仅在新开一局时触发，通过 `obtainIfMissing` 检查避免重复
+- **行为（钥匙）**：在发放遗物后，将 `Settings.hasRubyKey`、`Settings.hasEmeraldKey`、`Settings.hasSapphireKey` 设为 `true`，使玩家开局即拥有三把钥匙
+- **防护**：仅在新开一局时触发，通过 `obtainIfMissing` 检查避免遗物重复；钥匙为布尔标志位，重复设置无副作用
 
 ### ModTheSpire.json
 

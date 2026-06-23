@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.relics.Omamori;
 import com.megacrit.cardcrawl.relics.FaceOfCleric;
 import com.megacrit.cardcrawl.relics.SsserpentHead;
 import com.megacrit.cardcrawl.relics.ToxicEgg2;
+import com.megacrit.cardcrawl.core.Settings;
 
 @SpirePatch(
     clz = AbstractPlayer.class,
@@ -28,6 +29,11 @@ public class RelicPatch {
         obtainIfMissing(__instance, FaceOfCleric.ID);
         obtainIfMissing(__instance, SsserpentHead.ID);
         obtainIfMissing(__instance, FrozenEgg2.ID);
+
+        // 开局获得红绿蓝三把钥匙，解锁 Neow 宝箱
+        Settings.hasRubyKey = true;
+        Settings.hasEmeraldKey = true;
+        Settings.hasSapphireKey = true;
     }
 
     private static void obtainIfMissing(AbstractPlayer player, String relicId) {

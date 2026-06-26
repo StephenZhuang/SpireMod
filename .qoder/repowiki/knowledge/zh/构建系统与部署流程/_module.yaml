@@ -1,0 +1,11 @@
+schema_version: 1
+module_path: build_system
+title: 构建系统与部署流程
+scope: []
+source_files:
+    - build.gradle
+    - scripts/build-mod.sh
+    - settings.gradle
+    - README.md
+depends_on: []
+related_to: []

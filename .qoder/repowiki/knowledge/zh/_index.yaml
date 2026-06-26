@@ -2,21 +2,64 @@
 schema_version: 1
 locale: zh-CN
 branch: main
-exported_at: "2026-06-17T03:55:04Z"
+nodes_managed: true
+exported_at: "2026-06-23T08:53:16Z"
 modules:
     "":
-        dir_name: 杀戮尖塔轻量级增强与商店借贷系统
-        title: 杀戮尖塔轻量级增强与商店借贷系统
-        scope:
+        dir_name: 杀戮尖塔商店借贷与开局增益模组
+        title: 杀戮尖塔商店借贷与开局增益模组
+        scope: []
+        source_files: []
+        children: []
+        depends_on: []
+        related_to: []
+    build_system:
+        dir_name: 构建系统与部署流程
+        title: 构建系统与部署流程
+        scope: []
+        source_files:
+            - build.gradle
+            - scripts/build-mod.sh
+            - settings.gradle
             - README.md
-            - .gitignore
+        children: []
+        depends_on: []
+        related_to: []
+    configuration_system:
+        dir_name: 基于 ModTheSpire 的静态配置与硬编码状态管理
+        title: 基于 ModTheSpire 的静态配置与硬编码状态管理
+        scope: []
+        source_files:
+            - src/main/resources/ModTheSpire.json
+            - build.gradle
+            - src/main/java/spiremod/SpireMod.java
+            - src/main/java/spiremod/state/LoanState.java
+            - src/main/java/spiremod/patches/GoldPatch.java
+            - src/main/java/spiremod/patches/RelicPatch.java
+        children: []
+        depends_on: []
+        related_to: []
+    dependency_management:
+        dir_name: 基于 Gradle 与本地游戏 JAR 的依赖管理
+        title: 基于 Gradle 与本地游戏 JAR 的依赖管理
+        scope: []
+        source_files:
             - build.gradle
             - settings.gradle
-            - scripts/
-            - docs/
-            - src/
-            - LICENSE
-        source_files: []
+            - src/main/resources/ModTheSpire.json
+        children: []
+        depends_on: []
+        related_to: []
+    error_handling:
+        dir_name: 错误处理机制：基于返回值与静默日志的轻量级策略
+        title: 错误处理机制：基于返回值与静默日志的轻量级策略
+        scope: []
+        source_files:
+            - src/main/java/spiremod/state/LoanState.java
+            - src/main/java/spiremod/patches/ShopLoanPatch.java
+            - src/main/java/spiremod/patches/LoanSavePatch.java
+            - src/main/java/spiremod/patches/GoldPatch.java
+            - build.gradle
         children: []
         depends_on: []
         related_to: []

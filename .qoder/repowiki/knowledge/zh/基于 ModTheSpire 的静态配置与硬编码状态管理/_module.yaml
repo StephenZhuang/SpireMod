@@ -1,0 +1,13 @@
+schema_version: 1
+module_path: configuration_system
+title: 基于 ModTheSpire 的静态配置与硬编码状态管理
+scope: []
+source_files:
+    - src/main/resources/ModTheSpire.json
+    - build.gradle
+    - src/main/java/spiremod/SpireMod.java
+    - src/main/java/spiremod/state/LoanState.java
+    - src/main/java/spiremod/patches/GoldPatch.java
+    - src/main/java/spiremod/patches/RelicPatch.java
+depends_on: []
+related_to: []

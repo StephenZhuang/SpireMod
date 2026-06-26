@@ -1,0 +1,10 @@
+schema_version: 1
+module_path: dependency_management
+title: 基于 Gradle 与本地游戏 JAR 的依赖管理
+scope: []
+source_files:
+    - build.gradle
+    - settings.gradle
+    - src/main/resources/ModTheSpire.json
+depends_on: []
+related_to: []

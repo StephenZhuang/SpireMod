@@ -21,7 +21,7 @@
 - 绿宝石钥匙（Emerald Key，解锁 Neow 绿色宝箱）
 - 蓝宝石钥匙（Sapphire Key，解锁 Neow 蓝色宝箱）
 
-以上均使用原版物品，无自定义遗物内容。商店贷款和心脏惩罚等扩展功能详见 `2026-06-16` 和 `2026-06-17` 设计文档。
+以上均使用原版物品，无自定义遗物内容。商店金币按钮等扩展功能详见 `2026-06-17-spiremod-prd.md`。
 
 ## 项目结构
 
@@ -29,16 +29,10 @@
 SpireMod/
 ├── src/main/java/spiremod/
 │   ├── SpireMod.java              # @SpireInitializer 入口
-│   ├── patches/
-│   │   ├── GoldPatch.java         # 开局金币 +200，重置贷款状态
-│   │   ├── RelicPatch.java        # 开局发放 8 个遗物
-│   │   ├── ShopLoanPatch.java     # 商店贷款/还款 UI
-│   │   ├── LoanSavePatch.java     # 贷款状态存档/读档持久化
-│   │   └── HeartLoanPenaltyPatch.java  # 心脏战债务惩罚
-│   ├── powers/
-│   │   └── MerchantWrathPower.java     # 商人的愤怒 Debuff
-│   └── state/
-│       └── LoanState.java         # 贷款全局状态
+│   └── patches/
+│       ├── GoldPatch.java         # 开局金币 +200
+│       ├── RelicPatch.java        # 开局发放遗物与钥匙
+│       └── ShopLoanPatch.java     # 商店 +100 金币按钮
 ├── src/main/resources/
 │   └── ModTheSpire.json           # MTS 元信息清单
 └── build.gradle                   # Gradle 构建脚本
@@ -59,8 +53,8 @@ SpireMod/
 ### GoldPatch.java
 
 - **Hook 目标**：角色初始化阶段（具体类名和方法签名在实现阶段通过反编译源码确认）
-- **行为**：在玩家金币计数器上 +200；重置 LoanState 内存状态；删除上局残留的 `loanstate.dat` 文件
-- **防护**：仅在新开一局时触发，读档时不触发；确保上局债务不会污染新局
+- **行为**：在玩家金币计数器上 +200
+- **防护**：仅在新开一局时触发，读档时不触发
 
 ### RelicPatch.java
 

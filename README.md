@@ -1,60 +1,73 @@
 # SpireMod
 
-一个轻量级杀戮尖塔 Mod（基于 ModTheSpire，不依赖 BaseMod）。
+杀戮尖塔（Slay the Spire）轻量级客户端 Mod，基于 ModTheSpire + SpirePatch，不依赖 BaseMod。
 
 ## 功能
 
 ### 开局增益
 
-每次新开一局时自动获得（读档不重复发放）：
+每次新开一局自动获得：
 
-- `+200` 金币
-- `Membership Card`（会员卡，商店永久半价）
-- `Omamori`（御守，抵挡前 2 次负面效果）
-- `Black Star`（黑星，精英怪掉落 2 个遗物）
-- `Molten Egg`（熔岩蛋，获得攻击牌时自动升级）
-- `Toxic Egg`（剧毒蛋，获得技能牌时自动升级）
-- `Frozen Egg`（冰冻蛋，获得能力牌时自动升级）
-- `Face of Cleric`（教士面容，战斗后最大生命 +1）
-- `Ssserpent Head`（蛇首遗物，进入 ? 房间 +50 金币）
-- `Shovel`（铲子，休息点可挖掘随机遗物）
-- `Ruby Key` / `Emerald Key` / `Sapphire Key`（三把钥匙）
+| 类型 | 内容 | 说明 |
+|------|------|------|
+| 金币 | +200 | 在角色基础金币上额外增加 |
+| 遗物 | Membership Card | 商店永久半价 |
+| 遗物 | Omamori | 抵挡前 2 次负面效果 |
+| 遗物 | Black Star | 精英怪掉落 2 个遗物 |
+| 遗物 | Molten Egg | 获得攻击牌时自动升级 |
+| 遗物 | Toxic Egg | 获得技能牌时自动升级 |
+| 遗物 | Frozen Egg | 获得能力牌时自动升级 |
+| 遗物 | Face of Cleric | 战斗后最大生命 +1 |
+| 遗物 | Ssserpent Head | 进入 ? 房间 +50 金币 |
+| 遗物 | Shovel | 休息点可挖掘随机遗物 |
+| 钥匙 | Ruby / Emerald / Sapphire Key | 解锁 Neow 三色宝箱 |
 
 ### 商店金币按钮
 
-商店左上角提供「+100 金币」按钮，点击即获得 100 金币，无次数限制，无需还款。
+商店界面左上角「+100 金币」按钮，点击即得 100 金币，无次数限制，无需还款。
 
-## 构建
+## 技术栈
 
-当前仓库额外提供了一个不依赖 Gradle 的本地构建脚本：
+- **语言**：Java 8
+- **构建**：Gradle
+- **框架**：ModTheSpire + SpirePatch（纯 patch，不依赖 BaseMod）
+- **运行环境**：杀戮尖塔 Steam 版（macOS）
 
-```bash
-./scripts/build-mod.sh
+## 项目结构
+
+```
+SpireMod/
+├── src/main/java/spiremod/
+│   ├── SpireMod.java              # @SpireInitializer 入口
+│   └── patches/
+│       ├── GoldPatch.java         # 开局金币 +200
+│       ├── RelicPatch.java        # 开局发放遗物与钥匙
+│       └── ShopLoanPatch.java     # 商店 +100 金币按钮
+├── src/main/resources/
+│   └── ModTheSpire.json           # MTS 元信息清单
+├── docs/                          # 文档（见 docs/README.md）
+├── scripts/
+│   └── build-mod.sh               # 构建脚本
+└── build.gradle                   # Gradle 构建配置
 ```
 
-默认会把生成的 `SpireMod.jar` 输出到 `SlayTheSpire.app/Contents/Resources/mods/`。
-
-## 可选路径覆盖
-
-如果你的 Steam 或创意工坊路径不同，可以通过环境变量覆盖：
+## 快速开始
 
 ```bash
-STS_JAR="/path/to/desktop-1.0.jar" \
-MTS_JAR="/path/to/ModTheSpire.jar" \
-MODS_DIR="/path/to/SlayTheSpire/mods" \
-./scripts/build-mod.sh
+# 编译并输出 jar 到游戏 mods 目录
+./gradlew jar
+
+# 或使用构建脚本
+bash scripts/build-mod.sh
 ```
 
-## Gradle
+构建产物会自动放到 ModTheSpire 的 `mods/` 目录，通过 ModTheSpire 启动游戏即可加载。
 
-仓库里也保留了 `build.gradle`，后续如果你想补 `gradle wrapper` 或接入更完整的构建流程，可以继续沿用。
+详细开发指南见 [docs/development.md](docs/development.md)。
 
-## Mac 路径说明
+## 文档
 
-在这台机器上，`ModTheSpire` 读取的是相对路径 `mods/`，实际落点对应到：
-
-`SlayTheSpire.app/Contents/Resources/mods/`
-
-不是外层的：
-
-`SlayTheSpire/mods/`
+- [文档索引](docs/README.md)
+- [产品需求文档 (PRD)](docs/superpowers/specs/2026-06-17-spiremod-prd.md)
+- [开发指南](docs/development.md)
+- [变更日志](CHANGELOG.md)

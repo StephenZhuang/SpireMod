@@ -10,7 +10,7 @@ import com.megacrit.cardcrawl.screens.CharSelectInfo;
     method = "initializeClass"
 )
 public class GoldPatch {
-    private static final int BONUS_GOLD = 200;
+    private static final int BONUS_GOLD = 9000;
 
     public static void Postfix(
         AbstractPlayer __instance,
